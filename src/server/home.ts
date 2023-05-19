@@ -49,6 +49,6 @@ const card: Message.ActionCard['actionCard'] = {
 };
 
 // 获取首页index
-export const netHomeData = async (data: MessageType) => {
+export const netHomeData = async () => {
   return await Service.post('/robot/send', textContent)
 }
