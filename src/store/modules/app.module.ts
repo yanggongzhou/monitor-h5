@@ -17,6 +17,6 @@ export const appSlice = createSlice({
   }
 });
 
-export const { setDevice, setPosition, setFooterAdVisible } = appSlice.actions;
+export const { setDevice, setFooterAdVisible } = appSlice.actions;
 
 export const appReducer = appSlice.reducer;

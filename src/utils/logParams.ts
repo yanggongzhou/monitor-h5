@@ -1,9 +1,9 @@
 import { randomString } from './other'
 import { ClientConfig } from '@/client.config';
 import { isAndroid, isIos, ownOs } from "@/utils/ownOs";
-import { AnyObject, ILogParams } from "@/typings/hive.interfaces";
+import { AnyObject, IClipboard, ILogParams } from "@/typings/hive.interfaces";
 
-export const getUserLandId = () => {
+export const getUserLandId = (): string => {
   const userlandId = window.localStorage.getItem('USER_LANDPID');
   if (!userlandId) {
     const _id = randomString();
@@ -16,7 +16,16 @@ export const getUserLandId = () => {
 /**
  * 获取大数据打点参数
  */
-export const getLogParams = ({ event, clipboard, log_id, data = {} as AnyObject }): ILogParams => {
+interface IGetLogParams {
+  event: string;
+  clipboard: IClipboard;
+  log_id: string;
+  data: AnyObject;
+}
+
+type GetLogParams = (params: IGetLogParams) => ILogParams;
+
+export const getLogParams: GetLogParams = ({ event, clipboard, log_id, data = {} }) => {
   const { channelCode, bid, h5fingerPrint, fingerPrintPversion, h5uid, ua } = clipboard;
   const _bookId = data?.bookId ?? bid;
   const date = new Date();

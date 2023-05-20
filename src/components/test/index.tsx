@@ -2,7 +2,7 @@
 import React, { FC, useEffect } from "react";
 import { netHomeData } from "@/server/home";
 import Link from "next/link";
-import sensors from "sa-sdk-javascript";
+// import sensors from "sa-sdk-javascript";
 interface IProps {}
 
 const TestCom: FC<IProps> = () => {
@@ -13,7 +13,7 @@ const TestCom: FC<IProps> = () => {
 
 
   const SendMessage = async () => {
-    sensors.track('$WebClick', { test: 121212 })
+    // sensors.track('$WebClick', { test: 121212 })
   }
   return (<main>
     <Link href={'/'} >

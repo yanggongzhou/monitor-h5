@@ -10,7 +10,6 @@ interface IProps {}
 
 const Home: NextPage<IProps> = () => {
 
-
   const SendMessage = async () => {
     console.log('1212121')
     const a = await netHomeData();

@@ -84,7 +84,7 @@ const platformClient = {
 }
 
 export const ClientConfig = {
-  ...platformClient[process.env.Platform || 'xsdq'],
+  ...platformClient['xsdq'],
   clientId: "ftb_",
   netUrl: {
     ip: "/asg/remote.do",

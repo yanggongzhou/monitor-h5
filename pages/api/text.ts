@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { RecurrenceRule, scheduleJob } from 'node-schedule';
+import schedule, { Job, RecurrenceRule, scheduleJob } from 'node-schedule';
 
 const _minute = 1;
 const _second = 5;
@@ -26,14 +26,14 @@ type ResponseData = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  // if (scheduleJob) {
-  //   scheduleJob.cancel()
-  // }
 
   // 启动任务
-  const scheduleJob = new scheduleJob(scheduleRule, () => {
+  const scheduleJob = schedule.scheduleJob(scheduleRule, () => {
     console.log("new Date():", new Date());
   })
+  if (scheduleJob) {
+    scheduleJob.cancel()
+  }
 
   return res.status(200).json({
     name: '启动任务',
