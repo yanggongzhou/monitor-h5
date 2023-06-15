@@ -16,7 +16,7 @@ const Home: NextPage<IProps> = () => {
     console.log(a);
   }
   return (
-    <main className={styles.main}>
+    <main>
       <div  onClick={SendMessage}>
         Send Message
       </div>
