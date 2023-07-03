@@ -8,11 +8,12 @@ const nextConfig = {
   // productionBrowserSourceMaps: false,
   // /** 以上输出静态页面 */
 
-  // async rewrites() {
-  //   return [
-  //     { source: '/robot/send/:path*', destination: `https://oapi.dingtalk.com/robot/send:path*` },
-  //   ]
-  // },
+  async rewrites() {
+    return [
+      // { source: '/robot/send/:path*', destination: `https://oapi.dingtalk.com/robot/send:path*` },
+      { source: '/text-to-speech/:path*', destination: `https://api.elevenlabs.io/v1/text-to-speech:path*` },
+    ]
+  },
 }
 
 module.exports = nextConfig
