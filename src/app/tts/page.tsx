@@ -1,8 +1,8 @@
 'use client'
-import React, { useState } from "react";
-import styles from './page.module.css'
+import React, { useEffect, useState, useRef } from "react";
+import styles from './page.module.scss'
 import type { NextPage } from "next";
-import { Input, Select, Button } from 'antd';
+import { Input, Select, Button, Row, Col, Slider, InputNumber, Space } from 'antd';
 
 const { TextArea } = Input;
 
@@ -33,17 +33,27 @@ const voices = [
 ];
 
 const Home: NextPage<IProps> = () => {
+
   const [role, setRole] = useState(VoicesType.Domi);
+  const [similarity, setSimilarity] = useState(0.75);
+  const [stability, setStability] = useState(0.75);
+
   const [inputTxt, setInputTxt] = useState('');
   const getAudio = async (text: string) => {
-    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${role}/stream`, {
+    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${role}`, {
       method: 'POST',
       body: JSON.stringify({
         model_id: "eleven_monolingual_v1",
-        text
+        text,
+        voice_settings: {
+          stability,
+          similarity_boost: similarity
+        }
       }),
       headers: {
         'content-type': 'application/json',
+        'xi-api-key': '5637dbe4bbb8a0eac9362ac653b3005a',
+        'accept': 'audio/mpeg',
       }
     })
     const response = await res.blob();
@@ -60,7 +70,7 @@ const Home: NextPage<IProps> = () => {
     setRole(value)
   }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputTxt( e.target.value)
   };
 
@@ -73,11 +83,42 @@ const Home: NextPage<IProps> = () => {
     })
   }
 
+  const onSimilarityChange = (newValue: number) => {
+    setSimilarity(newValue);
+  };
+  const onStabilityChange = (newValue: number) => {
+    setStability(newValue);
+  };
+
   return (<div className={styles.ttsWrap}>
     <h3>TTS</h3>
     <p>支持多音频导出，每个段落一个音频</p>
     <div>
-      <TextArea value={inputTxt} rows={20} onChange={onChange} />
+      <TextArea value={inputTxt} rows={20} onChange={onInputChange} />
+      <br/>
+      <Space.Compact>
+        <label>stability:</label>
+        <Slider
+          style={{ width: '200px' }}
+          min={0}
+          step={0.05}
+          max={1}
+          onChange={onStabilityChange}
+          value={stability}
+        />
+      </Space.Compact>
+      <br/>
+      <Space.Compact>
+        <h4>similarity_boost:</h4>
+        <Slider
+          style={{ width: '200px' }}
+          min={0}
+          step={0.05}
+          max={1}
+          onChange={onSimilarityChange}
+          value={similarity}
+        />
+      </Space.Compact>
       <br/>
       <Select
         value={role}

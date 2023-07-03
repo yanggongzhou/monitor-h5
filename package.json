@@ -4,9 +4,9 @@
   "private": true,
   "homepage": ".",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 9099",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 9099",
     "lint": "next lint"
   },
   "dependencies": {

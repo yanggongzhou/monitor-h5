@@ -1,3 +1,4 @@
+const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // /** 以下输出静态页面 */
@@ -7,7 +8,13 @@ const nextConfig = {
   // basePath: "/out",
   // productionBrowserSourceMaps: false,
   // /** 以上输出静态页面 */
-
+  generateBuildId: async () => {
+    return 'build_id';
+  },
+  // sassOptions: {
+  //   includePaths: [path.join(__dirname, './src/app')],
+  //   prependData: `@import "common.module.scss";`
+  // },
   async rewrites() {
     return [
       // { source: '/robot/send/:path*', destination: `https://oapi.dingtalk.com/robot/send:path*` },
