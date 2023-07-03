@@ -35,7 +35,7 @@ const voices = [
 const Home: NextPage<IProps> = () => {
   const [role, setRole] = useState(VoicesType.Domi);
   const [inputTxt, setInputTxt] = useState('');
-  const getAudio = async (text) => {
+  const getAudio = async (text: string) => {
     const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${role}/stream`, {
       method: 'POST',
       body: JSON.stringify({
@@ -56,7 +56,7 @@ const Home: NextPage<IProps> = () => {
     URL.revokeObjectURL(url);
   }
 
-  const handleChange = (value) => {
+  const handleChange = (value: string) => {
     setRole(value)
   }
 
@@ -67,7 +67,9 @@ const Home: NextPage<IProps> = () => {
   const download = () => {
     const arr = inputTxt.split('\n');
     arr.forEach(text => {
-      getAudio(text);
+      if (text) {
+        getAudio(text);
+      }
     })
   }
 
